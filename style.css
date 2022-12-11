@@ -11,6 +11,10 @@ body{
     width: 100vw;
     height: 100vh;
 }
+.body{
+    display: flex;
+    gap: 10px;
+}
 .mainScreen{
     aspect-ratio: auto 1000 / 611;
     width: 1000px;
@@ -23,16 +27,41 @@ body{
     position: absolute;
     width: 740px;
     height: 475px;
-    left: 675px;
+    left: 740px;
     top: 265px;
     height: auto;
     width: auto;
     display: grid;
     grid-template-columns: repeat(9, 80px);
     grid-template-rows: repeat(5, 95px);
+    z-index: 69420;
 }
-.grass{ 
+.options{
+    display: flex;
+    flex-direction: column;
+    border: 5px solid white;
+    padding: 10px;
+    align-items: center;
+    color: white;
+    gap: 10px;
+}
+.grass{
     width: 80px;
     height: 95px;
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
+    background-size: contain;
 }
+.sunflower{
+    background-image: url('./assets/sunflower.gif');
+    width: 80px;
+    height: 95px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+}
+.pea{
+    background-image: url('./assets/peashooter.gif');
+    background-size: contain;
+    width: 80px;
+    height: 95px;
+}   
