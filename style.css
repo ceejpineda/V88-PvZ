@@ -1,0 +1,38 @@
+*, *::after, *::before{
+    padding: 0;
+    margin: 0;
+}
+body{
+    display: flex;
+    background-color: #121212;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+.mainScreen{
+    aspect-ratio: auto 1000 / 611;
+    width: 1000px;
+    height: auto;
+    background-image: url('./assets/Frontyard.webp');
+    background-size: contain;
+    display: flex;
+}
+.plantGrid{
+    position: absolute;
+    width: 740px;
+    height: 475px;
+    left: 675px;
+    top: 265px;
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: repeat(9, 80px);
+    grid-template-rows: repeat(5, 95px);
+}
+.grass{ 
+    width: 80px;
+    height: 95px;
+    border: 3px solid blue;
+}
