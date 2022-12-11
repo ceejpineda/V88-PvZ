@@ -24,9 +24,9 @@ const pvzGame = (() => {
         grass.forEach(g => {
             g.addEventListener('click', () => {
                 const divFollow = document.querySelector('.follow');
-                if (g.classList.contains('pea') || g.classList.contains('sunflower')) return;
-                if (divFollow.classList.contains('pea')) {
-                    g.classList.add('pea');
+                if (g.classList.contains('peashooter') || g.classList.contains('sunflower')) return;
+                if (divFollow.classList.contains('peashooter')) {
+                    g.classList.add('peashooter');
                 } else if (divFollow.classList.contains('sunflower')) {
                     g.classList.add('sunflower');
                 }
@@ -39,7 +39,6 @@ const pvzGame = (() => {
     const options = () => {
         const options = document.querySelector('.options');
         options.addEventListener('click', (e) => {
-            console.log(e.target.classList.contains('pea'))
             if (!e.target.classList.contains('plant')) return;
             const divFollow = document.createElement('div');
             const body = document.querySelector('.body');
@@ -50,6 +49,16 @@ const pvzGame = (() => {
             move = 1;
         });
     };
+
+    const peashooter = () =>{
+        const peas = document.querySelectorAll('.pea');
+        if(peas == null) return;
+
+        peas.forEach(pea => {
+            let peaPos = pea.getBoundingClientRect();
+
+        });
+    }
 
     return { spawnGrassGrid, grassClick, cursorImage,options }
 
