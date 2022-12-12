@@ -4,6 +4,19 @@ const pvzGame = (() => {
     const plantGrid = document.querySelector('.plantGrid');
     const mainScreenPos = mainScreen.getBoundingClientRect();
     const plantGridPos = plantGrid.getBoundingClientRect();
+    const zombieSound = new Audio();
+    zombieSound.src = './assets/brainzzz.mp3';
+    zombieSound.preload = 'auto';
+    const theme = document.getElementById('theme');
+    let isStart = false;
+
+    const start = () => {
+        const button = document.getElementById('start');
+        button.addEventListener('click', ()=>{
+            theme.play();
+            isStart = true;
+        })
+    }
     
     const spawnGrassGrid = () => {
         plantGrid.style.top = mainScreenPos.top + 60 + 'px'
@@ -56,6 +69,7 @@ const pvzGame = (() => {
     };
 
     const peashooterShoot = () =>{
+        if(!isStart) return;
         const peashooters = document.querySelectorAll('.peashooter');
         if(peashooters == null) return;
 
@@ -73,6 +87,7 @@ const pvzGame = (() => {
     }
 
     const peasMove = () =>{
+        if(!isStart) return;
         const peas = document.querySelectorAll('.pea');
         if(peas == null) return;
         peas.forEach(pea => {
@@ -82,24 +97,82 @@ const pvzGame = (() => {
     }
 
     const zombieSpawn = () =>{
+        if(!isStart) return;
+
+        zombieSound.play();
         const zombie = document.createElement('div');
+        let rand = Math.floor(Math.random()*5)*95
+        //console.log(rand)
         zombie.classList.add('zombie');
         mainScreen.appendChild(zombie);
-        zombie.style.top = plantGridPos.top 
+        zombie.style.top = plantGridPos.top - 30 + rand + 'px';
+        zombie.style.left = plantGridPos.right + 'px'
     }
 
-    return {spawnGrassGrid, grassClick, cursorImage, options, peashooterShoot, peasMove, zombieSpawn}
+    const zombieMove = () =>{
+        if(!isStart) return;
+
+        const zombies = document.querySelectorAll('.zombie');
+        if(zombies == null) return;
+
+        zombies.forEach(zombie => {
+            let zombiePos = zombie.getBoundingClientRect();
+            zombie.style.left = zombiePos.left - 3 + 'px';
+        });
+    }
+
+    const checkHit = () =>{
+        if(!isStart) return;
+
+        const zombies = document.querySelectorAll('.zombie');
+        const peas = document.querySelectorAll('.pea');
+        if(zombies == null) return;
+        if(peas == null) return;
+    
+        zombies.forEach(zombie => {
+            let zombiePos = zombie.getBoundingClientRect();
+            peas.forEach(pea => {
+                let peaPos = pea.getBoundingClientRect();
+                if(peaPos.left > (mainScreenPos.right-50)){
+                    pea.remove();
+                }
+                if(Math.abs(zombiePos.left - peaPos.left) < 10 && Math.abs(zombiePos.top - peaPos.top) < 50){
+                    if(zombie.classList.contains('hit')){
+                        zombie.classList.add('hit1');
+                        zombie.classList.remove('hit');
+                    }else if(zombie.classList.contains('hit1')){
+                        zombie.classList.add('hit2');
+                        zombie.classList.remove('hit1');
+                    }else if(zombie.classList.contains('hit2')){
+                        zombie.classList.add('hit3');
+                        zombie.classList.remove('hit2');
+                    }else if(zombie.classList.contains('hit3')){
+                        zombie.classList.add('hit4');
+                        zombie.classList.remove('hit3');
+                    }else if(zombie.classList.contains('hit4')){
+                        zombie.remove();
+                    }else{
+                        zombie.classList.add('hit');
+                    }
+                    pea.remove();
+                }
+            });
+        });
+
+    }
+
+    return {spawnGrassGrid, grassClick, cursorImage, options, peashooterShoot, peasMove, zombieSpawn, zombieMove, checkHit, start}
 
 })();
 
+pvzGame.start();
 pvzGame.spawnGrassGrid();
 pvzGame.grassClick();
 pvzGame.cursorImage();
 pvzGame.options();
 setInterval(pvzGame.peashooterShoot, 2000);
+setInterval(pvzGame.checkHit, 5);
 setInterval(pvzGame.peasMove, 10);
+setInterval(pvzGame.zombieSpawn, 5000)
+setInterval(pvzGame.zombieMove, 250);
 
-
-window.addEventListener('click', (e)=>{
-    console.log(e.clientX)
-})

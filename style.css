@@ -48,7 +48,7 @@ body{
 .grass{
     width: 80px;
     height: 95px;
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
     background-size: contain;
 }
 .sunflower{
@@ -79,8 +79,12 @@ body{
     background-image: url('./assets/zombie.gif');
     width: 100px;
     height: 120px;
-    top: 335px;
-    left: 1380px;
     background-size: contain;
     background-repeat: no-repeat;
+}
+#start{
+    position: absolute;
+    top: 100px;
+    left: 900px;
+    font-size: 25px;
 }
