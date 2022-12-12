@@ -48,7 +48,7 @@ body{
 .grass{
     width: 80px;
     height: 95px;
-    /* border: 3px solid blue; */
+    border: 3px solid blue;
     background-size: contain;
 }
 .sunflower{
@@ -65,4 +65,22 @@ body{
     background-repeat: no-repeat;
     width: 80px;
     height: 95px;
-}   
+}
+.pea{
+    background-image: url('./assets/pea.png');
+    position: absolute;
+    background-size: contain;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+}
+.zombie{
+    position: absolute;
+    background-image: url('./assets/zombie.gif');
+    width: 100px;
+    height: 120px;
+    top: 335px;
+    left: 1380px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

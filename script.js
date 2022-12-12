@@ -1,8 +1,13 @@
 const pvzGame = (() => {
     let move = 0;
-
+    const mainScreen = document.querySelector('.mainScreen');
+    const plantGrid = document.querySelector('.plantGrid');
+    const mainScreenPos = mainScreen.getBoundingClientRect();
+    const plantGridPos = plantGrid.getBoundingClientRect();
+    
     const spawnGrassGrid = () => {
-        const plantGrid = document.querySelector('.plantGrid')
+        plantGrid.style.top = mainScreenPos.top + 60 + 'px'
+        plantGrid.style.left = mainScreenPos.left + 240 + 'px'
         for (let i = 0; i < 45; i++) {
             const grass = document.createElement('div');
             grass.classList.add('grass')
@@ -50,17 +55,40 @@ const pvzGame = (() => {
         });
     };
 
-    const peashooter = () =>{
-        const peas = document.querySelectorAll('.pea');
-        if(peas == null) return;
+    const peashooterShoot = () =>{
+        const peashooters = document.querySelectorAll('.peashooter');
+        if(peashooters == null) return;
 
-        peas.forEach(pea => {
-            let peaPos = pea.getBoundingClientRect();
+        peashooters.forEach(peashooter => {
+            if(peashooter.classList.contains('plant'))return;
+            if(peashooter.classList.contains('follow'))return;
 
+            let peaPos = peashooter.getBoundingClientRect();
+            const pea = document.createElement('div');
+            pea.classList.add('pea');
+            mainScreen.appendChild(pea);
+            pea.style.top = peaPos.top + 'px';
+            pea.style.left = peaPos.left + 30 + 'px';
         });
     }
 
-    return { spawnGrassGrid, grassClick, cursorImage,options }
+    const peasMove = () =>{
+        const peas = document.querySelectorAll('.pea');
+        if(peas == null) return;
+        peas.forEach(pea => {
+            let peaPos = pea.getBoundingClientRect();
+            pea.style.left = peaPos.left + 1 + "px"
+        });
+    }
+
+    const zombieSpawn = () =>{
+        const zombie = document.createElement('div');
+        zombie.classList.add('zombie');
+        mainScreen.appendChild(zombie);
+        zombie.style.top = plantGridPos.top 
+    }
+
+    return {spawnGrassGrid, grassClick, cursorImage, options, peashooterShoot, peasMove, zombieSpawn}
 
 })();
 
@@ -68,4 +96,10 @@ pvzGame.spawnGrassGrid();
 pvzGame.grassClick();
 pvzGame.cursorImage();
 pvzGame.options();
+setInterval(pvzGame.peashooterShoot, 2000);
+setInterval(pvzGame.peasMove, 10);
 
+
+window.addEventListener('click', (e)=>{
+    console.log(e.clientX)
+})
